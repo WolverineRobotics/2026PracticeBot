@@ -22,7 +22,7 @@ public class DefaultDriveCommand extends Command {
 
     @Override 
     public void execute() {
-        driveBase.drive(Input.getVertical(), Input.getHorizontal(), Input.getHorizontalRotation());
+        driveBase.drive(Input.getVertical(), Input.getHorizontal(), Input.getRotation());
     
   
     }
