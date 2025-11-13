@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -63,8 +64,13 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double distance = (DriveConstants.tagHeight-DriveConstants.limelightHeight) / Math.tan(Units.degreesToRadians(LimelightHelpers.getTY(name) / 2));
-        SmartDashboard.putNumber("Angle", LimelightHelpers.getTY(name) / 2);
+        double zComponentRange = (DriveConstants.tagHeight-DriveConstants.limelightHeight) / (Math.tan(Units.degreesToRadians(DriveConstants.limelightAngle + LimelightHelpers.getTY(name))));
+        double zComponentRangeCorrected = (DriveConstants.m * zComponentRange) + DriveConstants.b;
+        double distance = zComponentRangeCorrected / Math.cos(Units.degreesToRadians(Math.abs(LimelightHelpers.getTX(name))));
+
+        SmartDashboard.putNumber("Angle", LimelightHelpers.getTY(name));
+        SmartDashboard.putNumber(" zComponentRange", zComponentRangeCorrected);
+        SmartDashboard.putNumber("zComponentRange Uncorrected", zComponentRange);
         SmartDashboard.putNumber("Distance", distance);
     }
 
