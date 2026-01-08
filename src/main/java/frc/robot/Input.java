@@ -16,4 +16,10 @@ public class Input {
     public static double getRotation() {
         return driveController.getRightX();
     }
+
+    public static boolean getAbutton() {
+        return driveController.getAbutton();
+    }
+
+
 }
